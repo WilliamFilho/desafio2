@@ -10,23 +10,17 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Atividade {
+public class Participante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+
+
     private String nome;
+    private String email;
 
-    @Column(columnDefinition = "TEXT")
-    private String descricao;
-    private Double preco;
-
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
-
-    @ManyToMany(mappedBy = "atividades")
-    private Set<Participante> participantes = new HashSet<>();
-
+    @ManyToMany
+    @JoinTable(name = "Participante_Atividade", joinColumns = @JoinColumn(name = "participante_id"), inverseJoinColumns = @JoinColumn(name = "atividade_id"))
+    private Set<Atividade> atividades = new HashSet<>();
 }
