@@ -4,23 +4,23 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Categoria {
-
+public class Atividade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+    private String nome;
+
+    @Column(columnDefinition = "TEXT")
     private String descricao;
+    private Double preco;
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Atividade> atividades = new ArrayList<>();
 
-    public Categoria() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
 }
